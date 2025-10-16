@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khumo Floral Atelier</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css' rel='stylesheet' />
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+            color: #36454F; /* Charcoal Grey */
+        }
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            z-index: 1000;
+        }
+        .logo {
+            font-size: 24px;
+            color: #B76E79; /* Rose Gold */
+            font-weight: bold;
+        }
+        nav a {
+            text-decoration: none;
+            color: #36454F;
+            font-size: 16px;
+            margin-left: 20px;
+        }
+        nav a:first-child {
+            margin-left: 0;
+        }
+        .hero {
+            position: relative;
+            height: 100vh;
+            background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'); /* Dramatic protea for SA luxury */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .headline {
+            font-size: 48px;
+            color: #36454F;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .subheadline {
+            font-size: 20px;
+            color: #B76E79; /* Rose Gold */
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        .cta {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: #36454F;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 5px;
+            transition: color 0.3s;
+        }
+        .cta:hover {
+            color: #B76E79; /* Rose Gold on hover */
+        }
+        #portfolio {
+            padding: 100px 20px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        #portfolio h2 {
+            font-size: 36px;
+            margin-bottom: 50px;
+            color: #36454F;
+        }
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .portfolio-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .portfolio-item:hover img {
+            transform: scale(1.05);
+        }
+        .portfolio-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(54, 69, 79, 0.8));
+            color: white;
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        .portfolio-item:hover .portfolio-overlay {
+            transform: translateY(0);
+        }
+        .portfolio-overlay h3 {
+            margin: 0 0 10px;
+            font-size: 20px;
+        }
+        #pricing {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            background: rgba(183, 110, 121, 0.05); /* Subtle Rose Gold tint */
+        }
+        #pricing h2 {
+            font-size: 36px;
+            margin-bottom: 50px;
+            color: #36454F;
+        }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        .pricing-package {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        .pricing-package:hover {
+            transform: translateY(-5px);
+        }
+        .pricing-package h3 {
+            font-size: 24px;
+            color: #36454F;
+            margin-bottom: 20px;
+        }
+        .pricing-package .price {
+            font-size: 36px;
+            color: #B76E79;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .pricing-package ul {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+        .pricing-package li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 20px;
+        }
+        .pricing-package li::before {
+            content: '•';
+            color: #B76E79;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        .pricing-package .cta {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #36454F;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: color 0.3s;
+        }
+        .pricing-package .cta:hover {
+            color: #B76E79;
+        }
+        #blog {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        #blog h2 {
+            font-size: 36px;
+            margin-bottom: 50px;
+            color: #36454F;
+        }
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+        .blog-post {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .blog-post:hover {
+            transform: translateY(-5px);
+        }
+        .blog-post img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        .blog-post-content {
+            padding: 30px;
+        }
+        .blog-post-date {
+            font-size: 14px;
+            color: #B76E79;
+            margin-bottom: 10px;
+        }
+        .blog-post h3 {
+            font-size: 22px;
+            color: #36454F;
+            margin-bottom: 15px;
+        }
+        .blog-post p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+        .blog-post .cta {
+            font-size: 16px;
+            padding: 10px 20px;
+        }
+        #about {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        #about h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: #36454F;
+            grid-column: span 2;
+        }
+        #about img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        #about p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        #about .highlight {
+            color: #B76E79; /* Rose Gold */
+            font-style: italic;
+        }
+        #testimonials {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        #testimonials h2 {
+            font-size: 36px;
+            margin-bottom: 50px;
+            color: #36454F;
+        }
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        .testimonial {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            font-style: italic;
+            position: relative;
+        }
+        .testimonial::before {
+            content: '"';
+            font-size: 60px;
+            color: #B76E79;
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-family: serif;
+        }
+        .testimonial p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin: 0 0 20px;
+            padding-left: 20px;
+        }
+        .testimonial-author {
+            font-size: 16px;
+            color: #36454F;
+            font-weight: bold;
+            margin: 0;
+            padding-left: 20px;
+        }
+        #booking {
+            padding: 100px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            background: rgba(54, 69, 79, 0.05); /* Subtle Charcoal tint */
+        }
+        #booking h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: #36454F;
+        }
+        #booking p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+        #calendar {
+            max-width: 600px;
+            margin: 0 auto 40px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .booking-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .booking-form label {
+            text-align: left;
+            font-size: 16px;
+            color: #36454F;
+        }
+        .booking-form input,
+        .booking-form select {
+            padding: 12px;
+            border: 1px solid #B76E79; /* Rose Gold border */
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 16px;
+            background: white;
+            transition: border-color 0.3s;
+        }
+        .booking-form input:focus,
+        .booking-form select:focus {
+            outline: none;
+            border-color: #36454F;
+        }
+        .booking-form button {
+            padding: 15px;
+            background-color: #36454F;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-family: inherit;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .booking-form button:hover {
+            color: #B76E79; /* Rose Gold on hover */
+        }
+        .selected-date {
+            font-size: 18px;
+            color: #B76E79;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        #contact {
+            padding: 100px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        #contact h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: #36454F;
+        }
+        #contact p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .contact-form label {
+            text-align: left;
+            font-size: 16px;
+            color: #36454F;
+        }
+        .contact-form input,
+        .contact-form textarea {
+            padding: 12px;
+            border: 1px solid #B76E79; /* Rose Gold border */
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 16px;
+            background: white;
+            transition: border-color 0.3s;
+        }
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #36454F;
+        }
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        .contact-form button {
+            padding: 15px;
+            background-color: #36454F;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-family: inherit;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .contact-form button:hover {
+            color: #B76E79; /* Rose Gold on hover */
+        }
+        footer {
+            background: #36454F;
+            color: white;
+            padding: 40px 20px 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+        footer .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        footer .social-links a {
+            color: #B76E79;
+            text-decoration: none;
+        }
+        footer nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+        footer .copyright {
+            opacity: 0.8;
+        }
+        footer .copyright a {
+            color: #B76E79;
+            text-decoration: none;
+        }
+        @media (max-width: 768px) {
+            #about {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            #about h2 {
+                grid-column: span 1;
+            }
+            nav a {
+                margin-left: 10px;
+                font-size: 14px;
+            }
+            #booking {
+                padding: 80px 20px;
+            }
+            footer .social-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">K</div> <!-- Placeholder for Khumo Monogram Logo -->
+        <nav>
+            <a href="#home">HOME</a>
+            <a href="#portfolio">PORTFOLIO</a>
+            <a href="#pricing">PRICING</a>
+            <a href="#blog">BLOG</a>
+            <a href="#about">ABOUT</a>
+            <a href="#testimonials">TESTIMONIALS</a>
+            <a href="#booking">BOOKING</a>
+            <a href="#contact">CONTACT</a>
+        </nav>
+    </header>
+    <section id="home" class="hero">
+        <h1 class="headline">Khumo Floral Atelier</h1>
+        <p class="subheadline">Elevating South Africa's Indigenous Blooms to Bespoke Luxury</p>
+        <a href="#portfolio" class="cta">DISCOVER BESPOKE COLLECTIONS</a>
+    </section>
+    <section id="portfolio">
+        <h2>Curated for the Discerning Elite</h2>
+        <div class="portfolio-grid">
+            <div class="portfolio-item">
+                <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Protea Royale">
+                <div class="portfolio-overlay">
+                    <h3>Protea Royale</h3>
+                    <p>Iconic King Protea, reimagined for Johannesburg's premier galas and intimate vow renewals—exclusivity in every petal.</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <img src="https://images.unsplash.com/photo-1576958613958-2df37d5d1e7c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Fynbos Elegance">
+                <div class="portfolio-overlay">
+                    <h3>Fynbos Elegance</h3>
+                    <p>Cape fynbos artistry for Cape Town's high-society soirees, blending rare succulents with global opulence.</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Namaqualand Opulence">
+                <div class="portfolio-overlay">
+                    <h3>Namaqualand Opulence</h3>
+                    <p>Vibrant daisies from the Northern Cape, crafted into sculptural masterpieces for Durban's elite waterfront events.</p>
+                </div>
+            </div>
+        </div>
+        <p style="margin-top: 50px; font-size: 16px; opacity: 0.8;">Tailored commissions for weddings, corporate unveilings, and private estates across South Africa. Inquire for personalised consultations.</p>
+    </section>
+    <section id="pricing">
+        <h2>Bespoke Pricing Packages</h2>
+        <p style="font-size: 18px; margin-bottom: 50px; opacity: 0.8;">Indulge in the art of abundance. Prices in ZAR, excluding VAT and travel. Custom options available upon consultation.</p>
+        <div class="pricing-grid">
+            <div class="pricing-package">
+                <h3>Discovery Session</h3>
+                <div class="price">R5,000</div>
+                <ul>
+                    <li>90-minute private atelier consultation</li>
+                    <li>Mood board and initial concept sketches</li>
+                    <li>Indigenous bloom sourcing guidance</li>
+                </ul>
+                <a href="#booking" class="cta">BOOK SESSION</a>
+            </div>
+            <div class="pricing-package">
+                <h3>Signature Event</h3>
+                <div class="price">From R25,000</div>
+                <ul>
+                    <li>Up to 100 guests: Centrepieces, arches, and table florals</li>
+                    <li>Fynbos and protea integration</li>
+                    <li>On-site setup and 24-hour maintenance</li>
+                </ul>
+                <a href="#contact" class="cta">INQUIRE NOW</a>
+            </div>
+            <div class="pricing-package">
+                <h3>Grandeur Gala</h3>
+                <div class="price">From R75,000</div>
+                <ul>
+                    <li>200+ guests: Full venue transformation</li>
+                    <li>Sculptural installations and suspended elements</li>
+                    <li>Dedicated team and post-event collection</li>
+                </ul>
+                <a href="#contact" class="cta">INQUIRE NOW</a>
+            </div>
+            <div class="pricing-package">
+                <h3>Bespoke Masterpiece</h3>
+                <div class="price">Custom Quote</div>
+                <ul>
+                    <li>Tailored to your vision, no limits</li>
+                    <li>Exclusive rare blooms and collaborations</li>
+                    <li>Full project management across SA</li>
+                </ul>
+                <a href="#contact" class="cta">START CUSTOM</a>
+            </div>
+        </div>
+    </section>
+    <section id="blog">
+        <h2>Insights from the Atelier</h2>
+        <p style="font-size: 18px; margin-bottom: 50px; opacity: 0.8;">Stories of bloom, design, and the wild heart of South Africa. Curated reflections to inspire your next creation.</p>
+        <div class="blog-grid">
+            <article class="blog-post">
+                <img src="https://images.unsplash.com/photo-1546782349-5ca2f91b798b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Protea in Bloom">
+                <div class="blog-post-content">
+                    <time class="blog-post-date" datetime="2025-10-10">October 10, 2025</time>
+                    <h3>The Majestic Protea: South Africa's Crown Jewel</h3>
+                    <p>Discover the symbolic power of the King Protea, from ancient Khoisan lore to modern gala statements. How this resilient bloom embodies abundance in every petal.</p>
+                    <a href="#" class="cta">READ MORE</a>
+                </div>
+            </article>
+            <article class="blog-post">
+                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Fynbos Diversity">
+                <div class="blog-post-content">
+                    <time class="blog-post-date" datetime="2025-09-25">September 25, 2025</time>
+                    <h3>Fynbos Fusion: Blending Cape Wilds with Global Elegance</h3>
+                    <p>Explore innovative ways to weave Cape fynbos into high-society events, creating harmonious designs that celebrate biodiversity and sophistication.</p>
+                    <a href="#" class="cta">READ MORE</a>
+                </div>
+            </article>
+            <article class="blog-post">
+                <img src="https://images.unsplash.com/photo-1576958613958-2df37d5d1e7c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Seasonal Namaqualand">
+                <div class="blog-post-content">
+                    <time class="blog-post-date" datetime="2025-08-15">August 15, 2025</time>
+                    <h3>Namaqualand's Eternal Spring: Designing with Desert Daisies</h3>
+                    <p>From arid sands to opulent tablescapes, learn how Namaqualand's vibrant daisies bring a touch of the Karoo's magic to Durban's elite gatherings.</p>
+                    <a href="#" class="cta">READ MORE</a>
+                </div>
+            </article>
+        </div>
+    </section>
+    <section id="about">
+        <h2>About Khumo</h2>
+        <div>
+            <img src="https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Atelier Interior with SA Florals">
+        </div>
+        <div>
+            <p>Founded in the heart of Cape Town's vibrant floral heritage, Khumo Floral Atelier is a sanctuary where South Africa's wild beauty meets unparalleled craftsmanship.</p>
+            <p>Our atelier draws inspiration from the <span class="highlight">fynbos kingdoms of the Cape</span> and the majestic proteas of the Drakensberg, transforming indigenous flora into sculptural expressions of luxury and abundance.</p>
+            <p>With a legacy of serving South Africa's most prestigious estates and events—from the opulent vineyards of Stellenbosch to the skyline galas of Sandton—Khumo crafts bespoke installations that whisper stories of resilience and elegance.</p>
+            <p>Every creation is a collaboration between nature's artistry and our meticulous vision, ensuring timeless pieces that elevate your most cherished moments.</p>
+        </div>
+    </section>
+    <section id="testimonials">
+        <h2>What Our Clients Say</h2>
+        <div class="testimonials-grid">
+            <div class="testimonial">
+                <p>Khumo transformed our Stellenbosch vineyard wedding into a living masterpiece. The protea sculptures were nothing short of breathtaking—elegance woven from the very soul of South Africa.</p>
+                <p class="testimonial-author">- Elena M., Estate Owner, Stellenbosch</p>
+            </div>
+            <div class="testimonial">
+                <p>For our Sandton gala, Khumo's bespoke fynbos installations elevated the evening to unparalleled sophistication. Discreet, divine, and utterly unforgettable.</p>
+                <p class="testimonial-author">- Dr. Thabo R., Corporate Executive, Johannesburg</p>
+            </div>
+            <div class="testimonial">
+                <p>The Namaqualand-inspired centerpiece for our Durban seaside retreat captured the wild opulence we envisioned. Khumo doesn't just arrange flowers; they curate legacies.</p>
+                <p class="testimonial-author">- Sophia K., Philanthropist, Durban</p>
+            </div>
+        </div>
+    </section>
+    <section id="booking">
+        <h2>Schedule Your Bespoke Consultation</h2>
+        <p>Secure a private viewing or design session at our Cape Town atelier. Select an available date below to begin crafting your vision.</p>
+        <div id='calendar'></div>
+        <div id="selectedDate" class="selected-date" style="display: none;">Selected Date: <span id="dateDisplay"></span></div>
+        <form class="booking-form" id="bookingForm" style="display: none;" action="#" method="post">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="time">Preferred Time Slot</label>
+            <select id="time" name="time" required>
+                <option value="">Select a time</option>
+                <option value="10:00 AM">10:00 AM</option>
+                <option value="2:00 PM">2:00 PM</option>
+                <option value="4:00 PM">4:00 PM</option>
+            </select>
+            
+            <button type="submit">CONFIRM BOOKING</button>
+        </form>
+    </section>
+    <section id="contact">
+        <h2>Inquire for Bespoke Elegance</h2>
+        <p>Let us craft something extraordinary for your vision. Share your story, and we'll respond with tailored inspiration from South Africa's finest blooms.</p>
+        <form class="contact-form" action="#" method="post"> <!-- Replace action with your backend endpoint -->
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="message">Your Vision</label>
+            <textarea id="message" name="message" required placeholder="Describe your event, occasion, or bespoke request..."></textarea>
+            
+            <button type="submit">SEND INQUIRY</button>
+        </form>
+        <p style="margin-top: 20px; font-size: 14px; opacity: 0.7;">Confidential consultations available nationwide. For immediate assistance, contact us at info@khumofloral.co.za</p>
+    </section>
+    <footer>
+        <div class="social-links">
+            <a href="https://instagram.com/khumofloral">Instagram</a>
+            <a href="https://linkedin.com/company/khumofloral">LinkedIn</a>
+            <a href="https://pinterest.com/khumofloral">Pinterest</a>
+        </div>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#blog">Blog</a>
+            <a href="#about">About</a>
+            <a href="#booking">Booking</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        <p class="copyright">&copy; 2025 Khumo Floral Atelier. All rights reserved. | <a href="/privacy">Privacy Policy</a></p>
+    </footer>
+
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var selectedDateEl = document.getElementById('selectedDate');
+            var dateDisplayEl = document.getElementById('dateDisplay');
+            var bookingFormEl = document.getElementById('bookingForm');
+
+            // Sample available dates - replace with dynamic data from backend
+            var availableDates = ['2025-10-20', '2025-10-22', '2025-10-25', '2025-10-27'];
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                initialDate: '2025-10-16',
+                selectable: true,
+                selectMirror: true,
+                dayMaxEvents: true,
+                weekends: true,
+                events: availableDates.map(date => ({ date: date, display: 'background', backgroundColor: '#B76E79' })), // Highlight available dates in Rose Gold
+                select: function(info) {
+                    var selectedDate = info.startStr;
+                    if (availableDates.includes(selectedDate)) {
+                        dateDisplayEl.textContent = new Date(selectedDate).toLocaleDateString('en-ZA', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                        selectedDateEl.style.display = 'block';
+                        bookingFormEl.style.display = 'flex';
+                        // Pre-fill form with date if needed
+                    } else {
+                        alert('This date is not available. Please select an available date highlighted in rose gold.');
+                    }
+                },
+                selectAllow: function(selectInfo) {
+                    return availableDates.includes(selectInfo.startStr);
+                }
+            });
+            calendar.render();
+        });
+    </script>
+</body>
+</html>
